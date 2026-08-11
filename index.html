@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>g1 - O portal de notícias da Globo</title>
+    <style>
+        /* Reset de margens e configuração global de fonte para imitar o portal */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        /* --- CABEÇALHO PRINCIPAL --- */
+        .header-top {
+            background-color: #c4170c; /* Vermelho exato do g1 */
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .menu-icon, .search-icon {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-icon span {
+            font-size: 14px;
+            display: none; /* Esconde o texto 'MENU' em telas muito pequenas */
+        }
+
+        @media (min-width: 768px) {
+            .menu-icon span { display: block; }
+        }
+
+        /* A clássica logo circular do g1 */
+        .logo-g1 {
+            background-color: white;
+            color: #c4170c;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            padding-right: 2px;
+            text-decoration: none;
+        }
+
+        /* --- SUB-CABEÇALHO (Região) --- */
+        .subheader {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #e2e2e2;
+            padding: 15px 0;
+        }
+
+        .subheader-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .subheader-content a {
+            color: #c4170c;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        /* --- LAYOUT PRINCIPAL --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 60px;
+        }
+
+        /* --- NOTÍCIA PRINCIPAL --- */
+        .chapeu {
+            color: #c4170c;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .noticia-principal h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            color: #222;
+            letter-spacing: -1.5px;
+            margin-bottom: 15px;
+        }
+
+        .noticia-principal h2 {
+            font-size: 22px;
+            line-height: 1.4;
+            color: #555;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .metadados {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .metadados span {
+            color: #c4170c;
+        }
+
+        /* Links de desdobramento (estilo bullet) */
+        .links-desdobramento {
+            list-style: none;
+            border-top: 1px solid #e2e2e2;
+            padding-top: 20px;
+        }
+
+        .links-desdobramento li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .links-desdobramento li::before {
+            content: "•";
+            color: #c4170c;
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+            top: -4px;
+        }
+
+        .links-desdobramento a {
+            color: #0066cc;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .links-desdobramento a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- SIDEBAR (MAIS LIDAS) --- */
+        .sidebar {
+            border-left: 1px solid #e2e2e2;
+            padding-left: 30px;
+        }
+
+        .sidebar-titulo {
+            font-size: 14px;
+            font-weight: bold;
+            color: #222;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .mais-lidas {
+            list-style: none;
+            counter-reset: ranking;
+        }
+
+        .mais-lidas li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 25px;
+            counter-increment: ranking;
+        }
+
+        .mais-lidas li::before {
+            content: counter(ranking);
+            position: absolute;
+            left: 0;
+            top: -5px;
+            font-size: 38px;
+            font-weight: 900;
+            color: #e2e2e2; /* Número grande e cinza claro ao fundo */
+            line-height: 1;
+        }
+
+        .mais-lidas a {
+            color: #222;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1.3;
+            display: block;
+        }
+
+        .mais-lidas a:hover {
+            color: #c4170c;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .sidebar {
+                border-left: none;
+                border-top: 1px solid #e2e2e2;
+                padding-left: 0;
+                padding-top: 30px;
+            }
+            .noticia-principal h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-top">
+        <div class="header-content">
+            <div class="menu-icon">
+                &#9776; <span>MENU</span>
+            </div>
+            <a href="#" class="logo-g1">g1</a>
+            <div class="search-icon">&#128269;</div>
+        </div>
+    </header>
+
+    <div class="subheader">
+        <div class="subheader-content">
+            <a href="#">Mato Grosso</a>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="noticia-principal">
+            <span class="chapeu">Ipiranga do Norte</span>
+            
+            <h1>Tazo e Zezo assassinaram a onça em Ipiranga do Norte - MT</h1>
+            
+            <h2>Ocorrência registrada no município do interior mato-grossense mobiliza autoridades locais após denúncias de moradores da região.</h2>
+            
+            <div class="metadados">
+                Há 15 minutos &middot; Por <span>g1 MT</span>
+            </div>
+
+            <ul class="links-desdobramento">
+                <li><a href="#">Polícia Ambiental investiga o caso e busca envolvidos na zona rural</a></li>
+                <li><a href="#">Especialistas alertam: caça de animais silvestres é crime inafiançável</a></li>
+                <li><a href="#">Vídeo: veja o momento da captura registrado nas redes sociais</a></li>
+            </ul>
+        </section>
+
+        <aside class="sidebar">
+            <div class="sidebar-titulo">Mais lidas de Mato Grosso</div>
+            <ol class="mais-lidas">
+                <li><a href="#">Tazo e Zezo assassinaram a onça em Ipiranga do Norte - MT</a></li>
+                <li><a href="#">Previsão do tempo: frente fria deve derrubar temperaturas no estado</a></li>
+                <li><a href="#">Acidente na BR-163 causa interdição e longo congestionamento</a></li>
+                <li><a href="#">Concurso público no MT: inscrições abertas com salários de até R$ 8 mil</a></li>
+                <li><a href="#">Produtores rurais relatam prejuízos após forte tempestade na região norte</a></li>
+            </ol>
+        </aside>
+    </main>
+
+</body>
+</html>
+
